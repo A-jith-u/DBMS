@@ -1,0 +1,20 @@
+create table Language(Lang_id int primary key,Name varchar(255) not null);
+
+create table publisher(p_id int primary key,Name varchar(255) not null,Address varchar(255) not null);
+
+create table Author(A_id int primary key,Name varchar(255) not null,Email varchar(255),Phn_num varchar(20),Status varchar(50) not null);
+
+create table Book(B_id int primary key,Title varchar(255) not null,Lang_id int ,Mrp decimal(10,2),P_id int,Published_date date,Volume int,Status varchar(50) not null,foreign key(Lang_id) referenc
+es Language(Lang_id),foreign key(P_id) references Publisher(P_id));
+
+create table Late_fee_Rule(From_day int,To_day int,Amount decimal(10,2),primary key(From_day,To_day));
+
+create table Member(M_id int primary key,Name varchar(255) not null,Branch_code varchar(20) not null,Roll_no varchar(20) not null,Phn_num varchar(20),Email_id varchar(255),D_of_join date,Status varchar(50) not null);
+
+create table Book_Author(B_id int,A_id int, primary key(B_id,A_id),foreign key(B_id) references Book(B_id),foreign key(A_id) references Author(A_id));
+
+create table Book_Issue(Is_id int primary key,Date_of_Issue date,B_id int,M_id int,Exp_Date_Return date,Status varchar(50) not null,foreign key(B_id) references Book(B_id),foreign key(M_id) refere
+nces Member(M_id));
+
+create table Book_Return(Is_id int primary key,Actual_Return_Date date,Late_Days int,LateFee decimal(10,2),foreign key(Is_id) references Book_Issue(Is_id));
+
